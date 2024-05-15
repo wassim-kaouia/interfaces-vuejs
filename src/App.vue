@@ -8,11 +8,12 @@ import DataTable from './components/DataTable.vue'
 <template>
   <div id="app">
     <div class="container">
-      <MyNavbar />
-    </div>
-
-    <div class="container">
-      <DataTable />
+      <div class="row">
+        <MyNavbar />
+      </div>
+      <div class="container">
+        <DataTable />
+      </div>
     </div>
   </div>
 </template>
