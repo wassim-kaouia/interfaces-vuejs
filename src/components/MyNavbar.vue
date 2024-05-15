@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="">
     <div class="container">
       <button
         class="navbar-toggler"
@@ -14,8 +14,40 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Paiement</a>
+          <li class="nav-item dropdown">
+            <div class="" @mouseleave="closeSubmenus">
+              <a href="#" class="nav-link dropdown-toggle" type="button" @click="toggleDropdown">
+                Paiements
+              </a>
+              <div v-show="isOpen" class="dropdown-menu show">
+                <a
+                  v-for="(item, index) in menuItems"
+                  :key="index"
+                  :href="item.link"
+                  class="dropdown-item"
+                  :class="{ 'dropdown-toggle': item.children }"
+                  @click="openSubmenu(index)"
+                >
+                  {{ item.name }}
+                </a>
+                <div
+                  v-for="(submenu, index) in submenuItems"
+                  :key="index"
+                  class="dropdown-menu"
+                  :class="{ show: submenu.isOpen }"
+                  :style="{ top: '40px', left: '100%', position: 'absolute' }"
+                >
+                  <a
+                    v-for="(item, subIndex) in submenu.children"
+                    :key="subIndex"
+                    :href="item.link"
+                    class="dropdown-item"
+                  >
+                    {{ item.name }}
+                  </a>
+                </div>
+              </div>
+            </div>
           </li>
 
           <ul class="navbar-nav">
@@ -28,7 +60,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Recouvrement
+                | Recouvrement
               </a>
               <ul
                 class="dropdown-menu dropdown-menu-light"
@@ -43,7 +75,11 @@
           <!-- </div> -->
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Comptabilité</a>
+            <a class="nav-link" href="#">| Comptabilité</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="goToHello">| Reporting</a>
           </li>
         </ul>
         <div class="d-flex">
@@ -82,20 +118,60 @@
 
 <script>
 export default {
-  name: 'MyNavbar',
+  components: {},
   data() {
-    return {}
+    return {
+      isOpen: false,
+      menuItems: [
+        {
+          name: 'Creation de Dossier',
+          link: '#'
+          // children: [
+          //   { name: 'Creation de Dossier', link: '#' },
+          //   { name: 'Submenu 1.2', link: '#' }
+          // ]
+        },
+        {
+          name: 'Liberation de Dossier',
+          link: '#',
+          children: [
+            { name: 'Interface de Paiement', link: '#' },
+            { name: 'Liberation de Dossier', link: '#' }
+          ]
+        }
+      ]
+    }
   },
-  methods: {}
+  computed: {
+    submenuItems() {
+      return this.menuItems.filter((item) => item.children)
+    }
+  },
+  methods: {
+    goToHello() {
+      this.$router.push('/hello')
+    },
+    toggleDropdown() {
+      this.isOpen = !this.isOpen
+    },
+    openSubmenu(index) {
+      this.menuItems.forEach((item, i) => {
+        if (i !== index) {
+          item.isOpen = false
+        }
+      })
+      this.menuItems[index].isOpen = !this.menuItems[index].isOpen
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style scoped >
 .profile-avatar {
   width: 40px;
 }
 
-.dropdown-menu li {
+.dropdown-menu {
   position: relative;
 }
 .dropdown-menu .dropdown-submenu {
@@ -110,5 +186,9 @@ export default {
 }
 .dropdown-menu > li:hover > .dropdown-submenu {
   display: block;
+}
+
+.dropdown-toggle::after {
+  display: none;
 }
 </style>

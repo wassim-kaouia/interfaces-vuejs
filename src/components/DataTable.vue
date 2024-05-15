@@ -125,11 +125,25 @@
     </table>
   </div>
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <button class="btn btn-primary mx-2" @click="selectAll">Select All</button>
-        <button class="btn btn-secondary mx-2" @click="deselectAll">Deselect All</button>
-        <button class="btn btn-danger mx-2" @click="deleteSelected">Delete Selected</button>
+    <div class="d-flex justify-content-between p-2">
+      <div class="">
+        <button class="btn btn-primary mx-2" @click="selectAll">Selelctionner</button>
+        <button class="btn btn-secondary mx-2" @click="deselectAll">Deselectionner</button>
+        <button class="btn btn-danger mx-2" @click="deleteSelected">Supprimer</button>
+      </div>
+      <div class="d-flex justify-content-between">
+        <div class="input-group mx-2">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Action</label>
+          </div>
+          <select class="form-select" id="inputGroupSelect01">
+            <option selected>-</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" @click="selectAll">Valider</button>
       </div>
     </div>
   </div>
@@ -352,7 +366,7 @@ th {
 }
 
 .topping {
-  margin-top: 100px;
+  margin-top: 80px;
   position: relative;
 }
 </style>
