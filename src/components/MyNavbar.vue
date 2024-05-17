@@ -40,7 +40,7 @@
                   <a
                     v-for="(item, subIndex) in submenu.children"
                     :key="subIndex"
-                    :href="item.link"
+                    @click="goToHello2(item.myroute)"
                     class="dropdown-item"
                   >
                     {{ item.name }}
@@ -135,8 +135,8 @@ export default {
           name: 'Liberation de Dossier',
           link: '#',
           children: [
-            { name: 'Interface de Paiement', link: '#' },
-            { name: 'Liberation de Dossier', link: '#' }
+            { name: 'Interface de Paiement', link: '', myroute: 'hello' },
+            { name: 'Liberation de Dossier', link: '', myroute: 'hello' }
           ]
         }
       ]
@@ -150,6 +150,9 @@ export default {
   methods: {
     goToHello() {
       this.$router.push('/hello')
+    },
+    goToHello2(myroute) {
+      this.$router.push(myroute)
     },
     toggleDropdown() {
       this.isOpen = !this.isOpen
